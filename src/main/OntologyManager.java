@@ -18,25 +18,41 @@ public class OntologyManager {
 	
 	private String weedahmIRI = "http://www.semanticweb.org/weedahm/ontology";
 	
-	private String diseaseIRI = "#Dis";
-	private String symptomIRI = "#Symp";
-	private String ageIRI = "#Age";
-	private String dialecticIRI = "#Diale";
+	private String diseaseIRI = "#Dis"; //병명
+	private String symptomIRI = "#Symp"; //증상(병증)
+	private String toddlerIRI = "#Tod"; //소아
+	private String dialecticIRI = "#Diale"; //변증
 	private String medicineIRI = "#Med";
 	private String medicineEffectIRI = "#MedEft";
-	private String partIRI = "#Part";
-	private String physiologyIRI = "#Phys";
-	private String genderIRI = "#Gender";
-	private String prescriptionIRI = "#Pre";
-	private String reasonIRI = "#Reas";
+	private String partIRI = "#Part"; //부위
+	private String physiologyIRI = "#Phys"; //생리
+	private String genderIRI = "#Gender"; //성별
+	private String prescriptionIRI = "#Pre"; 
+	private String reasonIRI = "#Reas"; //병인(병리)
+	private String StatusIRI = "#Status"; //상태
+	private String WomanIRI = "#Woman"; //여성
+	private String HurtPartIRI = "#HurtPart";
 	
 	
 	private String hasSymptomURI = "#hasSymp";
-	private String isSymptomOfURI = "#isSympOf";
+	private String isSymptomOfURI = "#isSympOf"; //증상
 	private String hasHurtPartURI = "#hasUrtPart";
-	private String isHurtPartOfURI = "#isHurtPartOf";
+	private String isHurtPartOfURI = "#isHurtPartOf"; //부위
+	private String hasStatusOfWomanURI = "#hasStatusOfWoman";
+	private String isStatusOfWomanURI = "#isStatusOfWoman"; //여성
+	private String hasPhysURI = "#hasPhys"; 
+	private String isPhysOfURI = "#isPhysOf"; //생리
+	private String hasReasonURI = "#hasReason"; 
+	private String isReasonOfURI = "#isReasonOf"; //병인
+	private String hasToddlerURI = "#hasTod";
+	private String isToddlerOfURI = "#isTodOf"; //소아
+	private String hasDialecticURI = "#hasDiale";
+	private String isDialecticOfURI = "#isDialeOf"; // 변증
+	private String hasStatusURI = "#hasStatus";
+	private String isStatusOfURI = "#isStatusOf"; //상태
 	
-	OntProperty hasSymptomProp, isSymptomOfProp, hasHurtPartProp, isHurPartOfProp;
+	
+	OntProperty hasSympProp, isSympOfProp, hasHurtPartProp, isHurPartOfProp, hasStatusOfWomanProp, isStatusOfWomanOfProp, hasPhysProp, isPhysOfProp, hasReasonProp, isReasonOfProp, hasTodProp, isTodOfProp, hasDialeProp, isDialeOfProp, hasStatusProp, isStatusOfProp;
 	
 	private OntModel weedahmOnt = null;
 	
@@ -73,7 +89,7 @@ public class OntologyManager {
 	private void initModel() {
 		weedahmOnt.createClass(weedahmIRI+diseaseIRI);
 		weedahmOnt.createClass(weedahmIRI+symptomIRI);
-		weedahmOnt.createClass(weedahmIRI+ageIRI);
+		weedahmOnt.createClass(weedahmIRI+toddlerIRI);
 		weedahmOnt.createClass(weedahmIRI+dialecticIRI);
 		weedahmOnt.createClass(weedahmIRI+medicineIRI);
 		weedahmOnt.createClass(weedahmIRI+medicineEffectIRI);
@@ -85,15 +101,15 @@ public class OntologyManager {
 		
 		
 		
-		hasSymptomProp = weedahmOnt.createOntProperty(weedahmIRI + hasSymptomURI);
-		isSymptomOfProp = weedahmOnt.createOntProperty(weedahmIRI + isSymptomOfURI);
-		hasSymptomProp.addInverseOf(isSymptomOfProp);
-		hasSymptomProp.setDomain(weedahmOnt.getResource(weedahmIRI + diseaseIRI));
-		hasSymptomProp.setRange(weedahmOnt.getResource(weedahmIRI + symptomIRI));
+		hasSympProp = weedahmOnt.createOntProperty(weedahmIRI + hasSymptomURI);
+		isSympOfProp = weedahmOnt.createOntProperty(weedahmIRI + isSymptomOfURI);
+		hasSympProp.addInverseOf(isSympOfProp);
+		hasSympProp.setDomain(weedahmOnt.getResource(weedahmIRI + diseaseIRI));
+		hasSympProp.setRange(weedahmOnt.getResource(weedahmIRI + symptomIRI));
 		
 		hasHurtPartProp = weedahmOnt.createOntProperty(weedahmIRI + hasHurtPartURI);
 		isHurPartOfProp = weedahmOnt.createOntProperty(weedahmIRI + isHurtPartOfURI);
-		hasHurtPartProp.addInverseOf(isSymptomOfProp);
+		hasHurtPartProp.addInverseOf(isSympOfProp);
 		hasHurtPartProp.setDomain(weedahmOnt.getResource(weedahmIRI + diseaseIRI));
 		hasHurtPartProp.setRange(weedahmOnt.getResource(weedahmIRI + partIRI));
 	}
@@ -115,7 +131,7 @@ public class OntologyManager {
 		
 		for(int i=1; i<4; i++) {
 			switch(data[i]){
-			case "노소" : weedahmOnt.getOntClass(weedahmIRI + ageIRI).addSubClass(compositionData);
+			case "노소" : weedahmOnt.getOntClass(weedahmIRI + toddlerIRI).addSubClass(compositionData);
 						break;
 			case "남녀": weedahmOnt.getOntClass(weedahmIRI + genderIRI).addSubClass(compositionData);
 						break;
@@ -168,7 +184,7 @@ public class OntologyManager {
 		for(String symptomUri: symptomsUris) {		
 			OntClass symptom = weedahmOnt.createClass(weedahmIRI + symptomUri);
 			weedahmOnt.getOntClass(weedahmIRI + symptomIRI).addSubClass(symptom);
-			SomeValuesFromRestriction hasSomeSymptom = weedahmOnt.createSomeValuesFromRestriction(null, hasSymptomProp, symptom);
+			SomeValuesFromRestriction hasSomeSymptom = weedahmOnt.createSomeValuesFromRestriction(null, hasSympProp, symptom);
 			minorDemonstration.addSubClass(hasSomeSymptom);
 		}
 	}
