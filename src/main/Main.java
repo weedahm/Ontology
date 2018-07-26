@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		CSVParser csvParser = new CSVParser("C:\\Users\\cow94\\Desktop\\last.csv");
-		ArrayList<String> parseData = new ArrayList<String>();
+		ArrayList<String> parseData = new ArrayList<>();
 		try {
 			parseData = csvParser.parse();
 		} catch (IOException e) {

@@ -20,7 +20,7 @@ public class CSVParser {
 		InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "MS949");
 		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 		
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		
 		while ((line = bufferedReader.readLine()) != null) {
 			result.add(line);
