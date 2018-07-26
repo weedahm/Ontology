@@ -10,7 +10,7 @@ public class CSVParser {
  
     public static void main(String[] args) {
         try{
-         InputStreamReader is = new InputStreamReader(new FileInputStream("C:\\Users\\cow94\\Desktop\\last.csv"), "EUC-KR");
+         InputStreamReader is = new InputStreamReader(new FileInputStream("C:\\Users\\cow94\\Desktop\\demo2.csv"), "EUC-KR");
          CSVReader reader = new CSVReader(is);
          List<String[]> list = reader.readAll();
          
