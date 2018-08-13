@@ -24,7 +24,6 @@ public class CSVParser {
 		
 		while ((line = bufferedReader.readLine()) != null) {
 			result.add(line);
-			System.out.println(line);
         }
 		
 		bufferedReader.close();

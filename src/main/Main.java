@@ -15,6 +15,13 @@ public class Main {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			}
 		}
+		
+		OntologyManager ontologyManager = new OntologyManager(parseData);
+		ontologyManager.createModel();
+		Log.d(TAG, "String writing file");
+		ontologyManager.printOnt();
+		Log.d(TAG, "All Complete");
+		
 	}
+}
